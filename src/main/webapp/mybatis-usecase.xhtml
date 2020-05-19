@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <h:outputStylesheet name="css/styles.css"/>
+    <title>MyBatis</title>
+</h:head>
+
+<h:body>
+    <div>
+        <h:link outcome="index">Home</h:link><br/>
+    </div>
+    <h1>MyBatis</h1>
+    <h:form>
+        <h2>All sections</h2>
+        <p:dataTable value="#{myBatisController.sections}" var="section">
+            <p:column headerText="Bar">
+                <ui:repeat var="bar" value="#{myBatisController.getBarById(section.barId)}">
+                    <p>#{bar.name}</p>
+                </ui:repeat>
+            </p:column>
+            <p:column headerText="Section">
+                <h:outputText value="#{section.name}"/>
+            </p:column>
+            <p:column headerText="MaxWorkers">
+                <h:outputText value="#{section.maxworkers}"/>
+            </p:column>
+            <p:column headerText="Workers">
+                <ui:repeat var="worker" value="#{myBatisController.getWorkerSection(section.id)}">
+                    <p>#{worker.name}</p>
+                </ui:repeat>
+            </p:column>
+        </p:dataTable>
+
+        <h2>Create new Bar</h2>
+        <table>
+            <tr>
+                <td>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="barName" value="Bar name"/>
+                        <p:inputText id="barName" value="#{myBatisController.bar.name}"/>
+                        <p:message for="barName"/>
+                    </h:panelGrid>
+                </td>
+            </tr>
+        </table>
+
+        <p:commandButton value="Create new bar"
+                         actionListener="#{myBatisController.createNewBar()}"
+                         action="mybatis-usecase?faces-redirect=true"
+                         ajax="false"/>
+
+        <p:messages globalOnly="true"/>
+
+        <h2>Create new section</h2>
+        <table>
+            <tr>
+                <td>
+                    <h:panelGrid columns="6">
+                        <p:outputLabel for="sectionName" value="Section name"/>
+                        <p:inputText id="sectionName" value="#{myBatisController.section.name}"/>
+                        <p:message for="sectionName"/>
+
+                        <p:outputLabel for="sectionMaxWorkers" value="MaxWorkers"/>
+                        <p:inputText id="sectionMaxWorkers" value="#{myBatisController.section.maxworkers}"/>
+                        <p:message for="sectionMaxWorkers"/>
+
+                        <p:outputLabel for="sectionBar" value="Bar"/>
+                        <p:selectOneMenu id="sectionBar" value="#{myBatisController.bar.id}">
+                            <f:selectItems value="#{myBatisController.bars}" var="bar"
+                                           itemLabel="#{bar.name}" itemValue="#{bar.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="sectionBar"/>
+                    </h:panelGrid>
+                </td>
+            </tr>
+        </table>
+
+        <p:commandButton value="Create new Section"
+                         actionListener="#{myBatisController.createNewSection()}"
+                         action="mybatis-usecase?faces-redirect=true"
+                         ajax="false"/>
+
+        <p:messages globalOnly="true"/>
+
+        <h2>Create new Worker</h2>
+        <table>
+            <tr>
+                <td>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="workerName" value="Worker name"/>
+                        <p:inputText id="workerName" value="#{myBatisController.worker.name}"/>
+                        <p:message for="workerName"/>
+                    </h:panelGrid>
+                </td>
+            </tr>
+        </table>
+
+        <p:commandButton value="Create new worker"
+                         actionListener="#{myBatisController.createNewWorker()}"
+                         action="mybatis-usecase?faces-redirect=true"
+                         ajax="false"/>
+
+        <p:messages globalOnly="true"/>
+
+        <h2>Assign worker for section</h2>
+        <table>
+            <tr>
+                <td>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="worker" value="Worker"/>
+                        <p:selectOneMenu id="worker" value="#{myBatisController.worker.id}">
+                            <f:selectItems value="#{myBatisController.workers}" var="worker"
+                                           itemLabel="#{worker.name}" itemValue="#{worker.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="worker"/>
+                    </h:panelGrid>
+                </td>
+                <td>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="section" value="Section"/>
+                        <p:selectOneMenu id="section" value="#{myBatisController.sectionToAssign.id}">
+                            <f:selectItems value="#{myBatisController.sections}" var="section"
+                                           itemLabel="#{section.name}" itemValue="#{section.id}"/>
+                        </p:selectOneMenu>
+                        <p:message for="section"/>
+                    </h:panelGrid>
+                </td>
+            </tr>
+        </table>
+
+        <p:commandButton value="Assign"
+                         actionListener="#{myBatisController.assignSectionToWorker()}"
+                         action="mybatis-usecase?faces-redirect=true"
+                         ajax="false"/>
+
+        <p:messages globalOnly="true"/>
+
+
+
+
+
+
+
+    </h:form>
+
+</h:body>
+</html>
