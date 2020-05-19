@@ -18,16 +18,16 @@
     <h:form>
         <h2>All sections</h2>
         <p:dataTable value="#{persistenceController.sections}" var="section">
+            <p:column headerText="Bar">
+                <ui:repeat var="bar" value="#{section.bar}">
+                    <p>#{bar.name}</p>
+                </ui:repeat>
+            </p:column>
             <p:column headerText="Section">
                 <h:outputText value="#{section.name}"/>
             </p:column>
             <p:column headerText="MaxWorkers">
                 <h:outputText value="#{section.maxWorkers}"/>
-            </p:column>
-            <p:column headerText="Bar">
-                <ui:repeat var="bar" value="#{section.bar}">
-                    <p>#{bar.name}</p>
-                </ui:repeat>
             </p:column>
             <p:column headerText="Workers">
                 <ui:repeat var="worker" value="#{section.workerList}">
