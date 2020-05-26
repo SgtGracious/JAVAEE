@@ -1,24 +1,28 @@
 package lt.vu.usecases;
 
 import lombok.Getter;
+import lt.vu.decorators.IndexPage;
 import lt.vu.entities.Bar;
 import lt.vu.entities.Section;
 import lt.vu.entities.Worker;
 import lt.vu.persistence.jpa.BarsDAO;
 import lt.vu.persistence.jpa.SectionsDAO;
 import lt.vu.persistence.jpa.WorkersDAO;
+import lt.vu.interceptors.LoggedInvocation;
 
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Model
-@RequestScoped
+@ViewScoped
 public class PersistenceController implements Serializable {
     @Inject
     private BarsDAO barsDAO;
@@ -26,6 +30,7 @@ public class PersistenceController implements Serializable {
     private SectionsDAO sectionsDAO;
     @Inject
     private WorkersDAO workersDAO;
+
 
     @Getter
     private Bar bar = new Bar();
@@ -48,6 +53,20 @@ public class PersistenceController implements Serializable {
         this.bars = barsDAO.loadAll();
         this.sections = sectionsDAO.loadAll();
         this.workers = workersDAO.loadAll();
+
+        Map<String, String> requestParameters =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+        if(requestParameters.containsKey("barId"))
+        {
+            Integer barId = Integer.parseInt(requestParameters.get("barId"));
+            this.bar = barsDAO.findOne(barId);
+        }
+        if(requestParameters.containsKey("workerId"))
+        {
+            Integer workerId = Integer.parseInt(requestParameters.get("workerId"));
+            this.worker = workersDAO.findOne(workerId);
+        }
     }
 
     @Transactional
@@ -56,6 +75,7 @@ public class PersistenceController implements Serializable {
         barsDAO.persist(bar);
     }
 
+    @LoggedInvocation
     @Transactional
     public void createNewSection(){
         List<Worker> workerList = new ArrayList();
@@ -87,4 +107,5 @@ public class PersistenceController implements Serializable {
 
         workerToAssign.setSectionList(sectionList);
     }
+
 }

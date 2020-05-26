@@ -30,9 +30,10 @@ public class Section implements Serializable {
     private String name;
 
     @Column(name = "MAXWORKERS", nullable = false)
-    private Float maxWorkers;
+    private Integer maxWorkers;
 
     @ManyToOne
+    @Setter
     @JoinColumn(name = "BAR_ID")
     private Bar bar;
 
@@ -46,7 +47,7 @@ public class Section implements Serializable {
     public Section() {
     }
 
-    public Section(String name, Float maxWorkers) {
+    public Section(String name, Integer maxWorkers) {
         this.name = name;
         this.maxWorkers = maxWorkers;
     }

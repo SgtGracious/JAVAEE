@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <context id="PlayerDB2" targetRuntime="MyBatis3Simple">
+    <context id="PlayerDB1" targetRuntime="MyBatis3Simple">
         <jdbcConnection driverClass="org.h2.Driver"
-                        connectionURL="jdbc:h2:~/h2database/PlayerDB4;AUTO_SERVER=TRUE"
+                        connectionURL="jdbc:h2:~/h2database/PlayerDB1;AUTO_SERVER=TRUE"
                         userId="sa"
                         password="sa">
         </jdbcConnection>

@@ -82,7 +82,7 @@
                     <artifactId>mybatis-generator-maven-plugin</artifactId>
                     <version>1.4.0</version>
                     <configuration>
-                        <contexts>PlayerDB4</contexts>
+                        <contexts>PlayerDB1</contexts>
                         <verbose>true</verbose>
                     </configuration>
                     <executions>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+>
+<h:head>
+    <h:body>
+        <h3>#{updateSections.section.name}</h3>
+        <h:form>
+            Section name:
+            <h:inputText value="#{updateSections.section.name}" required="true"/><br/>
+            Max worker amount:
+            <h:inputText value="#{updateSections.section.maxWorkers}" required="true"/><br/>
+            <h:commandButton value="Update" action="#{updateSections.updateSection}" >
+                <f:param name="sectionId" value="#{updateSections.section.id}" />
+            </h:commandButton>
+        </h:form>
+        <h:outputText value="Entry has already been modified. Please try again if you want to modify existing entry." rendered="#{param['error'] == 'optimistic-lock-exception'}"/>
+
+    </h:body>
+</h:head>
+</html>
